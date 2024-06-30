@@ -1,5 +1,6 @@
+local autocmd = vim.api.nvim_create_autocmd
 -- highlight yanked text
-vim.api.nvim_create_autocmd(
+autocmd(
 	'TextYankPost',
 	{
 		pattern = '*',
@@ -7,7 +8,7 @@ vim.api.nvim_create_autocmd(
 	}
 )
 -- jump to last edit position on opening file
-vim.api.nvim_create_autocmd(
+autocmd(
 	'BufReadPost',
 	{
 		pattern = '*',
@@ -25,17 +26,38 @@ vim.api.nvim_create_autocmd(
 
 -- shorter columns in text because it reads better that way
 local text = vim.api.nvim_create_augroup('text', { clear = true })
-for _, pat in ipairs({'text', 'markdown', 'mail', 'gitcommit'}) do
-	vim.api.nvim_create_autocmd('Filetype', {
+for _, pat in ipairs({ 'text', 'markdown', 'mail', 'gitcommit' }) do
+	autocmd('Filetype', {
 		pattern = pat,
 		group = text,
 		command = 'setlocal spell tw=72 colorcolumn=73',
 	})
 end
 --- tex has so much syntax that a little wider is ok
-vim.api.nvim_create_autocmd('Filetype', {
+autocmd('Filetype', {
 	pattern = 'tex',
 	group = text,
 	command = 'setlocal spell tw=80 colorcolumn=81',
 })
 
+autocmd('LspAttach', {
+	group = vim.api.nvim_create_augroup('MazzMS', {}),
+	callback = function(ev)
+		-- Enable conpletion triggered by <c-x><c-o>
+		vim.bo[ev.buf].omnifunc = 'v:lua.vom.lsp.omnifunc'
+
+		-- Buffer local mappings.
+		-- See ':help vim.lsp.*' for documentation on any
+		local opts = { buffer = ev.buf }
+		vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+		vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+		vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
+		vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+		vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
+		vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
+		vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
+		vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+		vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
+		vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+	end,
+})
