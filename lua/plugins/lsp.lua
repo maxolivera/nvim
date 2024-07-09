@@ -19,8 +19,9 @@ return {
 		masonlsp.setup({
 			ensure_installed = {
 				"lua_ls",
-				"pylsp",
+				"basedpyright",
 				"rust_analyzer",
+				"ruff",
 			},
 		})
 

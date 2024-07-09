@@ -20,5 +20,7 @@ return {
 				ls.change_choice(1)
 			end
 		end, { silent = true })
+
+		require("luasnip.loaders.from_lua").load({paths = "~/snippets"})
 	end,
 }
