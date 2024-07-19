@@ -18,6 +18,7 @@ return {
 		require("mason").setup()
 		masonlsp.setup({
 			ensure_installed = {
+				"tsserver",
 				"lua_ls",
 				"basedpyright",
 				"rust_analyzer",
