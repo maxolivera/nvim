@@ -26,7 +26,7 @@ autocmd(
 
 -- shorter columns in text because it reads better that way
 local text = vim.api.nvim_create_augroup('text', { clear = true })
-for _, pat in ipairs({ 'text', 'markdown', 'mail', 'gitcommit' }) do
+for _, pat in ipairs({ 'text', 'mail', 'gitcommit' }) do
 	autocmd('Filetype', {
 		pattern = pat,
 		group = text,
@@ -38,6 +38,12 @@ autocmd('Filetype', {
 	pattern = 'tex',
 	group = text,
 	command = 'setlocal spell tw=80 colorcolumn=81',
+})
+-- wrap on md files
+autocmd('Filetype', {
+	pattern = 'md',
+	group = text,
+	command = 'setlocal spell wrap spelllang=en_us',
 })
 
 autocmd('LspAttach', {
@@ -60,4 +66,20 @@ autocmd('LspAttach', {
 		vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
 		vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
 	end,
+})
+
+local CleanOnSave = vim.api.nvim_create_augroup('CleanOnSave', {})
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+	group = CleanOnSave,
+	pattern = "*",
+	command = [[%s/\s\+$//e]],
+}) -- remove trailing whitespace from all lines before saving a file)
+
+local pdf_links = require("mazzt.pdf_links")
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown",
+	callback = function()
+		vim.api.nvim_buf_set_keymap(0, 'n', '<CR>', ':lua require("mazzt.pdf_links").open_pdf_link()<CR>', { noremap = true, silent = true })
+	end
 })

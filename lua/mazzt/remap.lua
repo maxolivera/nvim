@@ -16,3 +16,13 @@ vim.keymap.set('', 'L', '$')
 -- terminal maps
 vim.keymap.set('n', '<leader>t', ':tab term<cr>')
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
+
+-- ignore capitalization mistakes
+vim.cmd("ca W w")
+vim.cmd("ca Q q")
+vim.cmd("ca WQ wq")
+vim.cmd("ca Wq wq")
+
+-- checkbox
+vim.keymap.set('n', '<leader>ty', [[:s/\[\s\]/[x]/<cr>]], { silent = true })
+vim.keymap.set('n', '<leader>tu', [[:s/\[x\]/[ ]/<cr>]], { silent = true })
