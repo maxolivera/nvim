@@ -1,5 +1,5 @@
 -- keep more context on screen while scrolling
-vim.opt.scrolloff = 2
+vim.opt.scrolloff = 10
 -- never show me line breaks if they're not there
 vim.opt.wrap = false
 -- always draw sign column. prevents buffer moving when adding/deleting sign
@@ -28,12 +28,24 @@ vim.opt.colorcolumn = '80'
 
 -- show more hidden characters
 -- also, show tabs nicer
-vim.opt.listchars = 'tab:^ ,nbsp:¬,extends:»,precedes:«,trail:•'
-
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+-- vim.opt.listchars = { tab = '^', nbsp = '¬', extends = '»', precedes = '«', trail = '•' }
 
 -- tabs
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
-
 vim.opt.conceallevel = 2
+
+-- Preview substitutions live, as you type!
+vim.opt.inccommand = 'split'
+
+-- Decrease update time
+vim.opt.updatetime = 100
+
+-- Decrease mapped sequence wait time
+-- Displays which-key popup sooner
+vim.opt.timeoutlen = 200
+
+vim.opt.foldtext = 'v:lua.vim.treesitter.foldtext()'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'

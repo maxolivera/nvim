@@ -18,11 +18,13 @@ return {
 		require("mason").setup()
 		masonlsp.setup({
 			ensure_installed = {
-				"tsserver",
+				"ts_ls",
 				"lua_ls",
+				"gopls",
 				"basedpyright",
 				"rust_analyzer",
 				"ruff",
+				"clangd",
 			},
 		})
 
@@ -38,6 +40,25 @@ return {
 					settings = {
 						Lua = { diagnostics = { globals = { "vim" } } }
 					}
+				}
+			end,
+			["gopls"] = function()
+				local util = require "lspconfig/util"
+				lsp.gopls.setup {
+					cmd = { "gopls" },
+					filetypes = { "go", "gomod", "gowork", "gotmpl" },
+					root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+					setting = {
+						gopls = {
+							analyses = {
+								unusedparams = true,
+							},
+							usePlaceholders = true,
+							staticcheck = true,
+							gofumpt = true,
+						},
+					},
+					["ui.diagnostic.staticcheck"] = true
 				}
 			end,
 		}

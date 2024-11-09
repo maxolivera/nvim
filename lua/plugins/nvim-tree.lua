@@ -4,7 +4,7 @@ return {
 	lazy = false,
 	dependencies = { 'nvim-tree/nvim-web-devicons' },
 	config = function()
-		vim.keymap.set("n", "<leader>e", ":NvimTreeFindFileToggle<cr>")
+		vim.keymap.set("n", "<leader>t", ":NvimTreeFindFileToggle<cr>")
 		vim.opt.termguicolors = true
  		vim.g.loaded_netrw = 1
 		vim.g.netrwPlugin = 1

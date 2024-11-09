@@ -21,7 +21,7 @@ return {
 		workspaces = {
 			{
 				name = "personal",
-				path = "~/vaults/personal",
+				path = "~/Sync/vaults/personal",
 			},
 		},
 		-- notes_subdir = "inbox",
