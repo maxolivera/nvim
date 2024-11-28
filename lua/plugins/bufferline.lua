@@ -3,7 +3,7 @@ return {
 	version = '*',
 	dependencies = 'nvim-tree/nvim-web-devicons',
 	config = function()
-		vim.cmd("colorscheme base16-gruvbox-dark-hard")
+		vim.cmd("colorscheme rose-pine")
 		vim.opt.termguicolors = true
 		require("bufferline").setup{}
 	end,
