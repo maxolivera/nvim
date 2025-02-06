@@ -25,6 +25,7 @@ return {
 				"rust_analyzer",
 				"ruff",
 				"clangd",
+				"astro",
 			},
 		})
 

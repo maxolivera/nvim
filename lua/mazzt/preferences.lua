@@ -49,3 +49,11 @@ vim.opt.timeoutlen = 200
 
 vim.opt.foldtext = 'v:lua.vim.treesitter.foldtext()'
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
+vim.filetype.add({
+	extension = {
+	mdx = "mdx",
+	},
+})
+
+vim.treesitter.language.register("markdown", "mdx")
